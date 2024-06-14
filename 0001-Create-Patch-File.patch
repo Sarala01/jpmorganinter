@@ -1,0 +1,53 @@
+From 1e6d54e10dc9c8f71371fa176f23355bf07032ce Mon Sep 17 00:00:00 2001
+From: sarala <saralaraja942@gmai.com>
+Date: Fri, 14 Jun 2024 20:19:25 +0530
+Subject: [PATCH] Create Patch File
+
+---
+ client_test.py | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/client_test.py b/client_test.py
+index af2bf26..467f671 100644
+--- a/client_test.py
++++ b/client_test.py
+@@ -1,5 +1,5 @@
+ import unittest
+-from client3 import getDataPoint
++from client3 import getDataPoint, getRatio
+ 
+ class ClientTest(unittest.TestCase):
+   def test_getDataPoint_calculatePrice(self):
+@@ -8,6 +8,8 @@ class ClientTest(unittest.TestCase):
+       {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+     ]
+     """ ------------ Add the assertion below ------------ """
++    for quote in quotes:
++      self.assertEqual(getDataPoint(quote), (quote['stock'], quote['top_bid']['price'], quote['top_ask']['price'], (quote['top_bid']['price'] + quote['top_ask']['price'])/2))
+ 
+   def test_getDataPoint_calculatePriceBidGreaterThanAsk(self):
+     quotes = [
+@@ -15,11 +17,16 @@ class ClientTest(unittest.TestCase):
+       {'top_ask': {'price': 121.68, 'size': 4}, 'timestamp': '2019-02-11 22:06:30.572453', 'top_bid': {'price': 117.87, 'size': 81}, 'id': '0.109974697771', 'stock': 'DEF'}
+     ]
+     """ ------------ Add the assertion below ------------ """
+-
++    for quote in quotes:
++      self.assertEqual(getDataPoint(quote), (quote['stock'], quote['top_bid']['price'], quote['top_ask']['price'], (quote['top_bid']['price'] + quote['top_ask']['price'])/2))
+ 
+   """ ------------ Add more unit tests ------------ """
++  def test_getRatio_checkIfPrice_aORPrice_bEqualZero(self):
++    self.assertEqual(getRatio(0, 1), None)
++    self.assertEqual(getRatio(1, 0), None)
++    self.assertEqual(getRatio(0, 0), None)
+ 
+ 
+ 
+-if __name__ == '__main__':
+-    unittest.main()
++if _name_ == '_main_':
++  unittest.main()
+\ No newline at end of file
+-- 
+2.41.0.windows.3
+
